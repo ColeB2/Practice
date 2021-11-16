@@ -4,25 +4,123 @@ class Cell {
 		this.y = y;
 		this.width = width;
 		this.state = state;
+		this.prevState = state;
+		
+		this.neighbours = [];
+		this.aliveNeighbours = 0;
+	}
+	
+	info() {
+		console.log('Cell:')
+		console.log(this.x)
+		console.log(this.y)
+		console.log(this.state)
+		console.log(this.prevState)
+		console.log(this.neighbours)
+		console.log(this.aliveNeighbours)
 	}
 	
 	draw(canvas) {
 		if (this.state) {
-			canvas.fillRect(this.x, this.y, this.width, this.width)
+			canvas.fillRect(this.x+1, this.y+1, this.width-2, this.width-2)
 		} else {
 			canvas.strokeRect(this.x, this.y, this.width, this.width)
+		}	
+	}
+	
+	drawState() {
+		// Used for drawing desired grid options
+		if (this.state == true) {
+			this.state = 1
+			this.prevState = 1
+		} else {
+			this.state = 0
+			this.prevState = 0
 		}
 		
 	}
+	
+	getNeighbours(neighbourhood, neighbours=[-1,0,1]) {
+		for (var j of neighbours) {
+			for (var i of neighbours) {
+				var validNeighbour = true;
+				
+				if ((i == 0) && (j == 0)) {
+					validNeighbour = false;
+				} else if ((this.x < 0) || (this.y + j < 0)) {
+					validNeighbour = false;
+				}  else if ((this.x + i > neighbourhood[0].length-1) || (this.y + j > neighbourhood.length - 1)) {
+					validNeighbour = false;
+				}
+				
+				if (validNeighbour == true) {
+					this.neighbours.append(neighbourhood[this.y + j][this.x + i])
+				} 
+			}
+		}
+	}
+	
+	checkNeighbourState() {
+		this.aliveNeighbours = 0;
+		for (var cell in this.neighbours) {
+			if (cell.prev_state == true) {
+				this.aliveNeighbours ++;
+			}
+		}
+	}
+	
+
+	calculateState() {
+		this.checkNeighbourState()
+		if (this.state == true) {
+			if ((this.aliveNeighbours == 2) || (this.aliveNeighbours == 3)) {
+				this.state = true;
+			} else {
+				this.state = false;
+			}
+		} else {
+			if (this.aliveNeighbours == 3) {
+				this.state = true;
+			} else {
+				this.state = false;
+			}
+			
+		}
+	}
+	
+	
 }
 
 
 
 var myCanvas = document.getElementById("myCanvas");
 var myCanvasCtx = myCanvas.getContext('2d');
-var myCell = new Cell(0, 0, 50, false);
-var myCell2 = new Cell(50, 0, 50, true);
 
+var canvasWidth = myCanvasCtx.canvas.clientWidth;
+var canvasHeight = myCanvasCtx.canvas.clientHeight;
+var cellWidth = 50;
 
-myCell.draw(myCanvasCtx)
-myCell2.draw(myCanvasCtx)
+var cellArray = [];
+
+for (var j = 0; j < canvasHeight; j += cellWidth) {
+	var cellRow = [];
+	for (var i = 0; i < canvasWidth; i += cellWidth) {
+		var myCell = new Cell(i, j, cellWidth, true);
+		cellRow.push(myCell)
+		
+	}
+	cellArray.push(cellRow)
+}
+
+cellArray[2][3].state = false;
+//var myCell = new Cell(0, 0, 50, false);
+//var myCell2 = new Cell(50, 0, 50, true);
+
+//myCell.draw(myCanvasCtx)
+//myCell2.draw(myCanvasCtx)
+for (var j = 0; j < cellArray.length; j++) {
+	for (var i= 0; i < cellArray[j].length; i++) {
+		cellArray[i][j].draw(myCanvasCtx);
+		cellArray[i][j].info();
+	}
+}
