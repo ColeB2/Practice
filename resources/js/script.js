@@ -96,6 +96,10 @@ class Cell {
 	
 	
 }
+//sleep
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 // Main
@@ -140,9 +144,47 @@ cellArray[4][5].state = true;
 
 //draw and display all info --> put in while loop
 for (var j = 0; j < cellArray.length; j++) {
-	for (var i= 0; i < cellArray[j].length; i++) {
-		cellArray[i][j].draw(myCanvasCtx);
-		cellArray[i][j].info();
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].draw(myCanvasCtx);
+			cellArray[i][j].info();
 	}
 }
+var whileLoopCondition = 0;
+
+
+//mainloop
+window.requestAnimationFrame(mainLoop);
+
+function mainLoop() {
+	console.log('Looping')
+	// calc state
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].calculateState();
+			}
+	}
+	//sets previous state
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].prev_state = cellArray[i][j].state;
+			}
+	}
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].draw(myCanvasCtx);
+			}
+	}
+	window.requestAnimationFrame(mainLoop);	
+}
+
+/*while (whileLoopCondition < 10) {
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].draw(myCanvasCtx);
+			}
+	}
+	await sleep(2000)
+}*/
+	
+
 
