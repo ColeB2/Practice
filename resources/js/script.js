@@ -44,17 +44,23 @@ class Cell {
 		for (var j of neighbours) {
 			for (var i of neighbours) {
 				var validNeighbour = true;
+				console.log(j)
+				console.log(i)
+				console.log(validNeighbour)
 				
 				if ((i == 0) && (j == 0)) {
+					//can't be neighbours with self
 					validNeighbour = false;
 				} else if ((this.x < 0) || (this.y + j < 0)) {
+					//can't be neighbours with cells off board/other side
 					validNeighbour = false;
 				}  else if ((this.x + i > neighbourhood[0].length-1) || (this.y + j > neighbourhood.length - 1)) {
+					//can't be neighbours with cells don't exist/off board
 					validNeighbour = false;
 				}
 				
 				if (validNeighbour == true) {
-					this.neighbours.append(neighbourhood[this.y + j][this.x + i])
+					this.neighbours.push(neighbourhood[this.y + j][this.x + i])
 				} 
 			}
 		}
@@ -92,24 +98,36 @@ class Cell {
 }
 
 
-
+// Main
 var myCanvas = document.getElementById("myCanvas");
 var myCanvasCtx = myCanvas.getContext('2d');
 
 var canvasWidth = myCanvasCtx.canvas.clientWidth;
 var canvasHeight = myCanvasCtx.canvas.clientHeight;
 var cellWidth = 50;
+var canvasWidthCellWidth = canvasWidth / cellWidth;
+var canvasHeightCellHeight = canvasHeight / cellWidth;
 
 var cellArray = [];
 
-for (var j = 0; j < canvasHeight; j += cellWidth) {
+
+//Creating Board of cells -- cellArray
+for (var j = 0; j < canvasHeightCellHeight; j++) {
 	var cellRow = [];
-	for (var i = 0; i < canvasWidth; i += cellWidth) {
+	for (var i = 0; i < canvasWidthCellWidth; i ++) {
 		var myCell = new Cell(i, j, cellWidth, true);
 		cellRow.push(myCell)
 		
 	}
 	cellArray.push(cellRow)
+}
+
+//set cell neighbours
+for (var j = 0; j < cellArray.length; j++) {
+	for (var i = 0; i < cellArray[j].length; i++) {
+		console.log(cellArray[i][j])
+		cellArray[i][j].getNeighbours(cellArray)
+	}
 }
 
 cellArray[2][3].state = false;
@@ -118,9 +136,12 @@ cellArray[2][3].state = false;
 
 //myCell.draw(myCanvasCtx)
 //myCell2.draw(myCanvasCtx)
+
+//draw and display all info --> put in while loop
 for (var j = 0; j < cellArray.length; j++) {
 	for (var i= 0; i < cellArray[j].length; i++) {
 		cellArray[i][j].draw(myCanvasCtx);
 		cellArray[i][j].info();
 	}
 }
+
