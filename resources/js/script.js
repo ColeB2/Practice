@@ -24,7 +24,7 @@ class Cell {
 		if (this.state) {
 			canvas.fillRect(this.x*this.width + 1, this.y*this.width + 1, this.width-2, this.width-2)
 		} else {
-			canvas.strokeRect(this.x, this.y, this.width, this.width)
+			canvas.strokeRect(this.x*this.width + 1, this.y*this.width + 1, this.width-2, this.width-2)
 		}	
 	}
 	
@@ -115,7 +115,7 @@ var cellArray = [];
 for (var j = 0; j < canvasHeightCellHeight; j++) {
 	var cellRow = [];
 	for (var i = 0; i < canvasWidthCellWidth; i ++) {
-		var myCell = new Cell(i, j, cellWidth, true);
+		var myCell = new Cell(i, j, cellWidth, false);
 		cellRow.push(myCell)
 		
 	}
@@ -125,12 +125,13 @@ for (var j = 0; j < canvasHeightCellHeight; j++) {
 //set cell neighbours
 for (var j = 0; j < cellArray.length; j++) {
 	for (var i = 0; i < cellArray[j].length; i++) {
-		console.log(cellArray[i][j])
 		cellArray[i][j].getNeighbours(cellArray)
 	}
 }
 
-cellArray[2][3].state = false;
+cellArray[4][3].state = true;
+cellArray[4][4].state = true;
+cellArray[4][5].state = true;
 //var myCell = new Cell(0, 0, 50, false);
 //var myCell2 = new Cell(50, 0, 50, true);
 
