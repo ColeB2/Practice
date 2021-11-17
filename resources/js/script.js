@@ -96,12 +96,6 @@ class Cell {
 	
 	
 }
-//sleep
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
 // Main
 var myCanvas = document.getElementById("myCanvas");
 var myCanvasCtx = myCanvas.getContext('2d');
@@ -152,11 +146,11 @@ for (var j = 0; j < cellArray.length; j++) {
 var whileLoopCondition = 0;
 
 
-//mainloop
-window.requestAnimationFrame(mainLoop);
+
 
 function mainLoop() {
-	console.log('Looping')
+	//clear canvas
+	myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
 	// calc state
 	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
@@ -177,14 +171,7 @@ function mainLoop() {
 	window.requestAnimationFrame(mainLoop);	
 }
 
-/*while (whileLoopCondition < 10) {
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].draw(myCanvasCtx);
-			}
-	}
-	await sleep(2000)
-}*/
-	
+//mainloop
+window.requestAnimationFrame(mainLoop);
 
 
