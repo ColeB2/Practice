@@ -22,7 +22,7 @@ class Cell {
 	
 	draw(canvas) {
 		if (this.state) {
-			canvas.fillRect(this.x+1, this.y+1, this.width-2, this.width-2)
+			canvas.fillRect(this.x*this.width + 1, this.y*this.width + 1, this.width-2, this.width-2)
 		} else {
 			canvas.strokeRect(this.x, this.y, this.width, this.width)
 		}	
