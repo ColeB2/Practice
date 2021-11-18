@@ -30,9 +30,15 @@ class Cell {
 	
 	draw(canvas) {
 		if (this.state) {
-			canvas.fillRect(this.x*this.width + 1, this.y*this.width + 1, this.width-2, this.width-2)
+			canvas.fillRect(this.x*this.width + 1,
+			                this.y*this.width + 1,
+							this.width-2,
+							this.width-2)
 		} else {
-			canvas.strokeRect(this.x*this.width + 1, this.y*this.width + 1, this.width-2, this.width-2)
+			canvas.strokeRect(this.x*this.width + 1,
+			                  this.y*this.width + 1,
+							  this.width-2,
+							  this.width-2)
 		}	
 	}
 	
@@ -48,15 +54,16 @@ class Cell {
 		
 	}
 	
-	getNeighbours(neighbourhood, neighbours=[-1,0,1]) {
-		for (var j of neighbours) {
-			for (var i of neighbours) {
+	getNeighbours(neighbourhood) {
+		const neighboursPosition = [-1, 0, 1];
+		for (var j of neighboursPosition) {
+			for (var i of neighboursPosition) {
 				var validNeighbour = true;
 				
 				if ((i == 0) && (j == 0)) {
 					//can't be neighbours with self
 					validNeighbour = false;
-				} else if ((this.x < 0) || (this.y + j < 0)) {
+				} else if ((this.x + i < 0) || (this.y + j < 0)) {
 					//can't be neighbours with cells off board/other side
 					validNeighbour = false;
 				}  else if ((this.x + i > neighbourhood[0].length-1) || (this.y + j > neighbourhood.length - 1)) {
@@ -210,6 +217,7 @@ cellArray[7][7].state = true;
 cellArray[8][8].state = true;
 cellArray[7][8].state = true;
 cellArray[8][7].state = true;
+
 setPrevState();
 
 
@@ -220,7 +228,7 @@ console.log("--------------CALC STATE-------------")
 calcState();
 console.log("-----------------------PREV STATE------------")
 setPrevState();
-myCanvasCtx.clearRect(0,0,myCanvas.width, myCanvas.height)
+myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
 initialUpdate();
 //window.requestAnimationFrame(mainLoop);
 
