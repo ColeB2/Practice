@@ -20,6 +20,14 @@ class Cell {
 		console.log(this.aliveNeighbours)
 	}
 	
+	stateInfo() {
+		console.log('Cell:')
+		console.log(this.x)
+		console.log(this.y)
+		console.log(this.state)
+		console.log(this.prevState)
+	}
+	
 	draw(canvas) {
 		if (this.state) {
 			canvas.fillRect(this.x*this.width + 1, this.y*this.width + 1, this.width-2, this.width-2)
@@ -96,40 +104,35 @@ class Cell {
 	
 	
 }
-// Main
-var myCanvas = document.getElementById("myCanvas");
-var myCanvasCtx = myCanvas.getContext('2d');
-
-var canvasWidth = myCanvasCtx.canvas.clientWidth;
-var canvasHeight = myCanvasCtx.canvas.clientHeight;
-var cellWidth = 50;
-var canvasWidthCellWidth = canvasWidth / cellWidth;
-var canvasHeightCellHeight = canvasHeight / cellWidth;
-
-var cellArray = [];
 
 
-//Creating Board of cells -- cellArray
-for (var j = 0; j < canvasHeightCellHeight; j++) {
-	var cellRow = [];
+
+//FUNCTIONS
+
+function createBoard() {
+	for (var j = 0; j < canvasHeightCellHeight; j++) {
+		var cellRow = [];
 	for (var i = 0; i < canvasWidthCellWidth; i ++) {
 		var myCell = new Cell(i, j, cellWidth, false);
 		cellRow.push(myCell)
-		
-	}
-	cellArray.push(cellRow)
+		}
+		cellArray.push(cellRow)
+	}	
 }
+
 
 //set cell neighbours
-for (var j = 0; j < cellArray.length; j++) {
-	for (var i = 0; i < cellArray[j].length; i++) {
-		cellArray[i][j].getNeighbours(cellArray)
-	}
+function setCellNeighbours() {
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i = 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].getNeighbours(cellArray)
+		}
+	}	
 }
 
-cellArray[4][3].state = true;
-cellArray[4][4].state = true;
-cellArray[4][5].state = true;
+
+
+
 //var myCell = new Cell(0, 0, 50, false);
 //var myCell2 = new Cell(50, 0, 50, true);
 
@@ -137,18 +140,21 @@ cellArray[4][5].state = true;
 //myCell2.draw(myCanvasCtx)
 
 //draw and display all info --> put in while loop
-for (var j = 0; j < cellArray.length; j++) {
+function initialUpdate() {
+	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
 			cellArray[i][j].draw(myCanvasCtx);
 			cellArray[i][j].info();
-	}
+		}
+	}	
 }
-var whileLoopCondition = 0;
+
 
 function calcState() {
 	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
 			cellArray[i][j].calculateState();
+			cellArray[i][j].stateInfo();
 			}
 	}
 }
@@ -157,6 +163,7 @@ function setPrevState() {
 	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
 			cellArray[i][j].prev_state = cellArray[i][j].state;
+			cellArray[i][j].stateInfo();
 			}
 	}
 }
@@ -173,17 +180,47 @@ function boardUpdate() {
 
 function mainLoop() {
 	//clear canvas
-	myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
+	//myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
 	// calc state
-	calcState();
+	//calcState();
 	//sets previous state
-	setPrevState();
+	//setPrevState();
 	
 	
 	window.requestAnimationFrame(mainLoop);	
 }
+//initials:
+// Main
+var myCanvas = document.getElementById("myCanvas");
+var myCanvasCtx = myCanvas.getContext('2d');
 
-//mainloop
-window.requestAnimationFrame(mainLoop);
+var canvasWidth = myCanvasCtx.canvas.clientWidth;
+var canvasHeight = myCanvasCtx.canvas.clientHeight;
+var cellWidth = 50;
+var canvasWidthCellWidth = canvasWidth / cellWidth;
+var canvasHeightCellHeight = canvasHeight / cellWidth;
+
+var cellArray = [];
+
+createBoard();
+setCellNeighbours();
+
+cellArray[4][3].state = true;
+cellArray[4][4].state = true;
+cellArray[4][5].state = true;
+
+cellArray[7][7].state = true;
+cellArray[8][8].state = true;
+cellArray[7][8].state = true;
+cellArray[8][7].state = true;
+
+initialUpdate();
+
+//createLoop
+calcState();
+setPrevState();
+myCanvasCtx.clearRect(0,0,myCanvas.width, myCanvas.height)
+initialUpdate();
+//window.requestAnimationFrame(mainLoop);
 
 
