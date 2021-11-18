@@ -26,6 +26,7 @@ class Cell {
 		console.log(this.y)
 		console.log(this.state)
 		console.log(this.prevState)
+		console.log(this.aliveNeighbours)
 	}
 	
 	draw(canvas) {
@@ -80,7 +81,7 @@ class Cell {
 	
 	checkNeighbourState() {
 		this.aliveNeighbours = 0;
-		for (var cell in this.neighbours) {
+		for (var cell of this.neighbours) {
 			if (cell.prevState == true) {
 				this.aliveNeighbours ++;
 			}
@@ -158,7 +159,7 @@ function calcState() {
 	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
 			cellArray[i][j].calculateState();
-			cellArray[i][j].stateInfo();
+			//cellArray[i][j].stateInfo();
 			}
 	}
 }
@@ -167,7 +168,7 @@ function setPrevState() {
 	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
 			cellArray[i][j].prevState = cellArray[i][j].state;
-			cellArray[i][j].stateInfo();
+			//cellArray[i][j].stateInfo();
 			}
 	}
 }
@@ -184,11 +185,13 @@ function boardUpdate() {
 
 function mainLoop() {
 	//clear canvas
-	//myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
+	myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height);
 	// calc state
-	//calcState();
+	calcState();
 	//sets previous state
-	//setPrevState();
+	setPrevState();
+	
+	boardUpdate();
 	
 	
 	window.requestAnimationFrame(mainLoop);	
@@ -218,18 +221,17 @@ cellArray[8][8].state = true;
 cellArray[7][8].state = true;
 cellArray[8][7].state = true;
 
+
 setPrevState();
-
-
 initialUpdate();
 
 //createLoop
 console.log("--------------CALC STATE-------------")
-calcState();
+//calcState();
 console.log("-----------------------PREV STATE------------")
-setPrevState();
-myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
-initialUpdate();
-//window.requestAnimationFrame(mainLoop);
+//setPrevState();
+//myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
+//initialUpdate();
+window.requestAnimationFrame(mainLoop);
 
 
