@@ -190,11 +190,12 @@ function mainLoop() {
 	calcState();
 	//sets previous state
 	setPrevState();
-	
 	boardUpdate();
 	
+	setTimeout( function() {
+		window.requestAnimationFrame(mainLoop);
+	},300);
 	
-	window.requestAnimationFrame(mainLoop);	
 }
 //initials:
 // Main
