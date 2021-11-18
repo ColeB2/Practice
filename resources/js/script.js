@@ -145,29 +145,41 @@ for (var j = 0; j < cellArray.length; j++) {
 }
 var whileLoopCondition = 0;
 
+function calcState() {
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].calculateState();
+			}
+	}
+}
 
+function setPrevState() {
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].prev_state = cellArray[i][j].state;
+			}
+	}
+}
+
+function boardUpdate() {
+	for (var j = 0; j < cellArray.length; j++) {
+		for (var i= 0; i < cellArray[j].length; i++) {
+			cellArray[i][j].draw(myCanvasCtx);
+			}
+	}
+	
+}
 
 
 function mainLoop() {
 	//clear canvas
 	myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
 	// calc state
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].calculateState();
-			}
-	}
+	calcState();
 	//sets previous state
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].prev_state = cellArray[i][j].state;
-			}
-	}
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].draw(myCanvasCtx);
-			}
-	}
+	setPrevState();
+	
+	
 	window.requestAnimationFrame(mainLoop);	
 }
 
