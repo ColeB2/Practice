@@ -182,8 +182,7 @@ function boardUpdate() {
 	
 }
 
-
-function mainLoop() {
+function updateGame() {
 	//clear canvas
 	myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height);
 	// calc state
@@ -191,14 +190,27 @@ function mainLoop() {
 	//sets previous state
 	setPrevState();
 	boardUpdate();
+}
+
+function pauseLoop() {
+	isRunning = !isRunning;
+	window.requestAnimationFrame(mainLoop);
+	console.log(isRunning)
+}
+
+function mainLoop() {
 	
-	setTimeout( function() {
+	if (isRunning) {
+		updateGame();
+		setTimeout( function() {
 		window.requestAnimationFrame(mainLoop);
 	}, 300);
-	
+		
+	}	
 }
 //initials:
 // Main
+var isRunning = true;
 var myCanvas = document.getElementById("myCanvas");
 var myCanvasCtx = myCanvas.getContext('2d');
 
