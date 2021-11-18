@@ -194,7 +194,7 @@ function mainLoop() {
 	
 	setTimeout( function() {
 		window.requestAnimationFrame(mainLoop);
-	},300);
+	}, 300);
 	
 }
 //initials:
