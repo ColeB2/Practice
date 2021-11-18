@@ -39,11 +39,11 @@ class Cell {
 	drawState() {
 		// Used for drawing desired grid options
 		if (this.state == true) {
-			this.state = 1
-			this.prevState = 1
+			this.state = true;
+			this.prevState = true;
 		} else {
-			this.state = 0
-			this.prevState = 0
+			this.state = false;
+			this.prevState = false;
 		}
 		
 	}
@@ -52,9 +52,6 @@ class Cell {
 		for (var j of neighbours) {
 			for (var i of neighbours) {
 				var validNeighbour = true;
-				console.log(j)
-				console.log(i)
-				console.log(validNeighbour)
 				
 				if ((i == 0) && (j == 0)) {
 					//can't be neighbours with self
@@ -77,7 +74,7 @@ class Cell {
 	checkNeighbourState() {
 		this.aliveNeighbours = 0;
 		for (var cell in this.neighbours) {
-			if (cell.prev_state == true) {
+			if (cell.prevState == true) {
 				this.aliveNeighbours ++;
 			}
 		}
@@ -162,7 +159,7 @@ function calcState() {
 function setPrevState() {
 	for (var j = 0; j < cellArray.length; j++) {
 		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].prev_state = cellArray[i][j].state;
+			cellArray[i][j].prevState = cellArray[i][j].state;
 			cellArray[i][j].stateInfo();
 			}
 	}
@@ -213,11 +210,15 @@ cellArray[7][7].state = true;
 cellArray[8][8].state = true;
 cellArray[7][8].state = true;
 cellArray[8][7].state = true;
+setPrevState();
+
 
 initialUpdate();
 
 //createLoop
+console.log("--------------CALC STATE-------------")
 calcState();
+console.log("-----------------------PREV STATE------------")
 setPrevState();
 myCanvasCtx.clearRect(0,0,myCanvas.width, myCanvas.height)
 initialUpdate();
