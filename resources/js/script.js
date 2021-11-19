@@ -45,12 +45,12 @@ class Cell {
 	
 	drawState() {
 		// Used for drawing desired grid options
-		if (this.state == true) {
-			this.state = true;
-			this.prevState = true;
-		} else {
+		if (this.state) {
 			this.state = false;
 			this.prevState = false;
+		} else {
+			this.state = true;
+			this.prevState = true;
 		}
 		
 	}
@@ -232,30 +232,25 @@ cellArray[7][8].state = true;
 cellArray[8][7].state = true;
 
 //click event:
+console.log("adding event listeners")
 myCanvas.addEventListener('click', function(event) {
 	var x = event.pageX - myCanvasLeft;
 	var y = event.pageY - myCanvasTop;
 	
 	//colision
+	console.log("before foreach loops")
 	cellArray.forEach(function(row) {
 		row.forEach(function(cell) {
-			if (y > cell.y && y < cell.y + cell.width
-		    && x > cell.x && x < cell.x + cell.width) {
-				alert('clicked an element');
-				console.log('clicked elem')
+			if (y > cell.y*cell.width && y < cell.y*cell.width + cell.width
+		    && x > cell.x*cell.width && x < cell.x*cell.width + cell.width) {
+				cell.drawState();
+				myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height);
+				boardUpdate();
 			}
 		});
-		
 	});
 	
 }, false);
-
-console.log("------------FOREACH HERE")
-cellArray.forEach(function(element) {
-	element.forEach(function(cell) {
-		console.log(cell)
-	})
-})
 
 
 setPrevState();
