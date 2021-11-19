@@ -140,12 +140,12 @@ function setCellNeighbours() {
 }
 //draw and display all info --> put in while loop
 function initialUpdate() {
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].draw(myCanvasCtx);
-			cellArray[i][j].info();
-		}
-	}	
+	cellArray.forEach(function(row) {
+		row.forEach(function(cell) {
+			cell.draw(myCanvasCtx);
+			cell.info();
+		})
+	})
 }
 
 
