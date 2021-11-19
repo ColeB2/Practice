@@ -110,10 +110,14 @@ class Cell {
 	
 }
 
+/*#######################################################
+#########################################################
+FUNCTIONS BELOW 
+#########################################################
+#########################################################
+*/
 
-
-//FUNCTIONS
-
+//Board related functions
 function createBoard() {
 	for (var j = 0; j < canvasHeightCellHeight; j++) {
 		var cellRow = [];
@@ -134,16 +138,6 @@ function setCellNeighbours() {
 		}
 	}	
 }
-
-
-
-
-//var myCell = new Cell(0, 0, 50, false);
-//var myCell2 = new Cell(50, 0, 50, true);
-
-//myCell.draw(myCanvasCtx)
-//myCell2.draw(myCanvasCtx)
-
 //draw and display all info --> put in while loop
 function initialUpdate() {
 	for (var j = 0; j < cellArray.length; j++) {
@@ -182,6 +176,8 @@ function boardUpdate() {
 	
 }
 
+
+//Main Loop Functions
 function updateGame() {
 	//clear canvas
 	myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height);
@@ -208,6 +204,8 @@ function mainLoop() {
 		
 	}	
 }
+
+
 //initials:
 // Main
 var isRunning = true;
