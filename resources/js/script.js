@@ -150,33 +150,28 @@ function initialUpdate() {
 
 
 function calcState() {
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].calculateState();
-			//cellArray[i][j].stateInfo();
-			}
-	}
+	cellArray.forEach(function(row) {
+		row.forEach(function(cell) {
+			cell.calculateState();
+		})
+	})
 }
 
 function setPrevState() {
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].prevState = cellArray[i][j].state;
-			//cellArray[i][j].stateInfo();
-			}
-	}
+	cellArray.forEach(function(row) {
+		row.forEach(function(cell) {
+			cell.prevState = cell.state;
+		})
+	})
 }
 
 function boardUpdate() {
-	for (var j = 0; j < cellArray.length; j++) {
-		for (var i= 0; i < cellArray[j].length; i++) {
-			cellArray[i][j].draw(myCanvasCtx);
-			}
-	}
-	
+	cellArray.forEach(function(row) {
+		row.forEach(function(cell) {
+			cell.draw(myCanvasCtx)
+		});
+	});
 }
-
-
 //Main Loop Functions
 function updateGame() {
 	//clear canvas
@@ -211,6 +206,10 @@ function mainLoop() {
 var isRunning = true;
 var myCanvas = document.getElementById("myCanvas");
 var myCanvasCtx = myCanvas.getContext('2d');
+var myCanvasLeft = myCanvas.offsetLeft + myCanvas.clientLeft
+var myCanvasTop = myCanvas.offsetTop + myCanvas.clientTop
+
+
 
 var canvasWidth = myCanvasCtx.canvas.clientWidth;
 var canvasHeight = myCanvasCtx.canvas.clientHeight;
@@ -232,17 +231,35 @@ cellArray[8][8].state = true;
 cellArray[7][8].state = true;
 cellArray[8][7].state = true;
 
+//click event:
+myCanvas.addEventListener('click', function(event) {
+	var x = event.pageX - myCanvasLeft;
+	var y = event.pageY - myCanvasTop;
+	
+	//colision
+	cellArray.forEach(function(row) {
+		row.forEach(function(cell) {
+			if (y > cell.y && y < cell.y + cell.width
+		    && x > cell.x && x < cell.x + cell.width) {
+				alert('clicked an element');
+				console.log('clicked elem')
+			}
+		});
+		
+	});
+	
+}, false);
+
+console.log("------------FOREACH HERE")
+cellArray.forEach(function(element) {
+	element.forEach(function(cell) {
+		console.log(cell)
+	})
+})
+
 
 setPrevState();
 initialUpdate();
-
-//createLoop
-console.log("--------------CALC STATE-------------")
-//calcState();
-console.log("-----------------------PREV STATE------------")
-//setPrevState();
-//myCanvasCtx.clearRect(0,0, myCanvas.width, myCanvas.height)
-//initialUpdate();
 window.requestAnimationFrame(mainLoop);
 
 
