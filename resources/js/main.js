@@ -58,14 +58,13 @@ class Main {
 	}
 }
 
-
-
-const mainGame = new Main();
-mainGame.initializeBoard();
-const pauseButton = document.getElementById('pause')
-const rangeSlider = document.getElementById('myRange');
-const output = document.getElementById('sliderValue');
-output.innerHTML = rangeSlider.value;
+export function main_obj = {
+	const mainGame = new Main();
+	mainGame.initializeBoard();
+	const pauseButton = document.getElementById('pause')
+	const rangeSlider = document.getElementById('myRange');
+	const output = document.getElementById('sliderValue');
+	output.innerHTML = rangeSlider.value;
 
 rangeSlider.oninput = function() {
 	output.innerHTML = this.value;
@@ -102,6 +101,10 @@ function startLoop() {
 
 console.log("runGame")
 mainGame.runGame();
+	
+}
+
+
 
 
 
