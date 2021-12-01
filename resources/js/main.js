@@ -1,3 +1,6 @@
+import {Board} from './cell.js'
+import './constants.js'
+
 class Main {
 	constructor () {
 		this.Board = new Board(BOARD_WIDTH, BOARD_HEIGHT)
