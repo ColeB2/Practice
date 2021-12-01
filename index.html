@@ -3,20 +3,44 @@
     <head>
     	<meta charset="utf-8">
     	<link href="resources/css/style.css" type="text/css" rel="stylesheet">
-    	<title>Practice</title>
+    	<title>Conway's Game of Life</title>
     </head>
 	
     <body>
-	
-	    <canvas id="myCanvas" width="450" height="450">
+	    <div>
+		    <h1>Conway's Game of Life</h1>
+		</div>
+	    <div id="canvas-container">
+		    <canvas id="myCanvas" width="650" height="450">No canvas support</canvas>
+		</div>
 		
-		</canvas>
-		
-		<div>
-		    <button onclick="pauseLoop()">Pause</button>
+		<div id="button-container">
+		    <button class="button" onclick="pauseLoop()" id='pause'>Start</button>
+			<button class="button" onclick="resetBoard()" id='reset'>Reset</button>
+			<button class="button" onclick="randomBoard()" id='random'>Random</button>
 		</div>
 		
 		
-		<script src="resources/js/script.js"></script>
+		<div class="slidecontainer">
+            <input type="range" min="100" max="1000" value="300" class="slider" id="myRange">
+			
+			<p>Delay: <span id="sliderValue"></span> ms</p>
+         </div>
+		
+		<br><br><br><br><br><hr>
+		<div class="container">
+		    <footer class="footer">
+			    <p><a href="https://coleb2.github.io/">Cole B</a></p>
+				<p>email: cebCole@gmail.com</p>
+				<p>github: <a href="https://github.com/ColeB2">ColeB2</a></p>
+			
+			</footer>
+		</div>
+		
+		<script src="resources/js/constants.js"></script>
+		<script src="resources/js/cell.js"></script>
+		<script src="resources/js/board.js"></script>
+		<script src="resources/js/main.js"></script>
+		
     </body>
 </html>
