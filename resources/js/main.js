@@ -65,35 +65,34 @@ export function main_obj = {
 	const rangeSlider = document.getElementById('myRange');
 	const output = document.getElementById('sliderValue');
 	output.innerHTML = rangeSlider.value;
-
-rangeSlider.oninput = function() {
-	output.innerHTML = this.value;
-	mainGame.delay = this.value;
-}
-
-function pauseLoop() {
-	if (mainGame.isRunning) {
-		pauseButton.innerText = 'Start';
-		pauseButton.classList.remove('button-paused')
-	} else {
-		pauseButton.innerText = 'Pause';
-		pauseButton.classList.add('button-paused')
+	
+	rangeSlider.oninput = function() {
+		output.innerHTML = this.value;
+		mainGame.delay = this.value;
 	}
 	
-	mainGame.isRunning = !mainGame.isRunning;
-	mainGame.runGame()
-}
-
-function resetBoard() {
-	document.getElementById('reset')
-	mainGame.Board.resetState()
-	mainGame.updateGame();
-}
-
-function randomBoard() {
-	mainGame.Board.randomState();
-	mainGame.updateGame();
-}
+	function pauseLoop() {
+		if (mainGame.isRunning) {
+			pauseButton.innerText = 'Start';
+			pauseButton.classList.remove('button-paused')
+		} else {
+			pauseButton.innerText = 'Pause';
+			pauseButton.classList.add('button-paused')
+		}
+		mainGame.isRunning = !mainGame.isRunning;
+		mainGame.runGame()
+	}
+	
+	function resetBoard() {
+		document.getElementById('reset')
+		mainGame.Board.resetState()
+		mainGame.updateGame();
+	}
+	
+	function randomBoard() {
+		mainGame.Board.randomState();
+		mainGame.updateGame();
+	}
 
 function startLoop() {
 	
