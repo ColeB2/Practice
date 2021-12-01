@@ -1,4 +1,4 @@
-import {Board} from './cell.js'
+import {Board} from './board.js'
 import './constants.js'
 
 class Main {
