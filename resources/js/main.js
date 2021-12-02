@@ -100,8 +100,6 @@ function startLoop() {
 
 console.log("runGame")
 mainGame.runGame();
-	
-}
 
 
 
