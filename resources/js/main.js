@@ -71,7 +71,7 @@ rangeSlider.oninput = function() {
 	mainGame.delay = this.value;
 }
 	
-export function pauseLoop() {
+window.onload = export function pauseLoop() {
 	if (mainGame.isRunning) {
 		pauseButton.innerText = 'Start';
 		pauseButton.classList.remove('button-paused')
@@ -83,13 +83,13 @@ export function pauseLoop() {
 	mainGame.runGame()
 }
 	
-export function resetBoard() {
+window.onload = export function resetBoard() {
 	document.getElementById('reset')
 	mainGame.Board.resetState()
 	mainGame.updateGame();
 }
 	
-export function randomBoard() {
+window.onload = function randomBoard() {
 	mainGame.Board.randomState();
 	mainGame.updateGame();
 }
