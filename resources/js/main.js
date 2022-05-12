@@ -93,6 +93,10 @@ function randomBoard() {
 	mainGame.Board.randomState();
 	mainGame.updateGame();
 	console.log("random")
+	let techUrl = "https://cole.pythonanywhere.com/api/v1/technologies/"
+    fetch(techUrl)
+        .then(res => res.json())
+        .then(data => console.log(data))
 }
 
 function startLoop() {
