@@ -92,6 +92,7 @@ function resetBoard() {
 function randomBoard() {
 	mainGame.Board.randomState();
 	mainGame.updateGame();
+	console.log("random")
 }
 
 function startLoop() {
